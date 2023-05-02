@@ -32,23 +32,22 @@ interface BaseLanguageModel {
     fun getNumTokensFromMessages(messages: List<BaseMessage>): Int {
         return messages.sumOf { m -> getNumTokens(getBufferString(listOf(m))) }
     }
+}
 
-    /**
-     * Get buffer string of messages.
-     */
-    private fun getBufferString(
-        messages: List<BaseMessage>, humanPrefix: String = "Human", aiPrefix: String = "AI",
-    ): String {
-        return messages.joinToString("\n") { m ->
-            val role = when (m) {
-                is HumanMessage -> humanPrefix
-                is AIMessage -> aiPrefix
-                is SystemMessage -> "System"
-                is ChatMessage -> m.role
-                else -> throw Exception("Got unsupported message type:${m}}")
-            }
-            "${role}: ${m.content}"
+/**
+ * Get buffer string of messages.
+ */
+fun getBufferString(
+    messages: List<BaseMessage>, humanPrefix: String = "Human", aiPrefix: String = "AI",
+): String {
+    return messages.joinToString("\n") { m ->
+        val role = when (m) {
+            is HumanMessage -> humanPrefix
+            is AIMessage -> aiPrefix
+            is SystemMessage -> "System"
+            is ChatMessage -> m.role
+            else -> throw Exception("Got unsupported message type:${m}}")
         }
+        "${role}: ${m.content}"
     }
-
 }

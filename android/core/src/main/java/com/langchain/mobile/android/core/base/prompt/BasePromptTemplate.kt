@@ -1,5 +1,7 @@
 package com.langchain.mobile.android.core.base.prompt
 
+import com.langchain.mobile.android.core.base.Variable
+
 /**
  * Base interface for all prompt templates, returning a prompt.
  */
@@ -13,7 +15,7 @@ interface BasePromptTemplate {
     /**
      * Create Chat Messages.
      */
-    fun formatPrompt(vararg pair: Pair<String, Any>): PromptValue
+    fun formatPrompt(vararg variable: Variable): PromptValue
 
     /**
      * Format the prompt with the inputs.
@@ -30,5 +32,5 @@ interface BasePromptTemplate {
 
     prompt.format(variable1="foo")
      */
-    fun format(vararg pair: Pair<String, Any>): String
+    fun format(vararg pair: Variable): String
 }

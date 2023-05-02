@@ -1,5 +1,6 @@
 package com.langchain.mobile.android.core.base.prompt
 
+import com.langchain.mobile.android.core.base.Variable
 import org.apache.commons.text.StringSubstitutor
 
 class PromptTemplate(private val template: String) : StringPromptTemplate {
@@ -8,7 +9,7 @@ class PromptTemplate(private val template: String) : StringPromptTemplate {
         get() = "prompt"
 
 
-    override fun format(vararg variables: Pair<String, Any>): String {
-        return StringSubstitutor(variables.toMap(), "{", "}").replace(template)
+    override fun format(vararg variable: Variable): String {
+        return StringSubstitutor(variable.toMap(), "{", "}").replace(template)
     }
 }

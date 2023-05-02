@@ -9,7 +9,7 @@ import com.langchain.mobile.android.core.base.output.LLMOutputImpl
 import com.langchain.mobile.android.core.chat.BaseChatModel
 import com.langchain.mobile.android.core.chat.ChatGenerationImpl
 import com.langchain.mobile.android.core.chat.ChatResult
-import com.langchain.mobile.android.core.chat.SimpleChatResultImpl
+import com.langchain.mobile.android.core.chat.ChatResultImpl
 import com.unfbx.chatgpt.OpenAiClient
 import com.unfbx.chatgpt.entity.chat.ChatChoice
 import com.unfbx.chatgpt.entity.chat.ChatCompletion
@@ -58,7 +58,7 @@ class ChatOpenAI(private val openaiApiKey: String, initBlock: ChatOpenAI.() -> U
     /**
      * Maximum number of tokens to generate.
      */
-    val maxTokens: Int? = null
+    var maxTokens: Int? = null
 
     /**
      * Use tenacity to retry the completion call.
@@ -107,7 +107,7 @@ class ChatOpenAI(private val openaiApiKey: String, initBlock: ChatOpenAI.() -> U
         val generations = chatCompletionResponse.choices.map { res ->
             ChatGenerationImpl(convertChatChoiceToMessage(res))
         }
-        return SimpleChatResultImpl(
+        return ChatResultImpl(
             generations,
             LLMOutputImpl(
                 chatCompletionResponse.usage.totalTokens,
