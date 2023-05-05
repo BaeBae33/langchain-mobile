@@ -10,6 +10,7 @@ import com.langchain.mobile.android.core.base.tool.Tool
 import com.langchain.mobile.android.core.utilities.GoogleSerperAPIWrapper
 import com.langchain.mobile.android.databinding.ActivityMainBinding
 import com.langchain.mobile.chatmodels.ChatOpenAI
+import com.langchain.mobile.native_feature.PackageListTool
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -55,6 +56,13 @@ class MainActivity : AppCompatActivity() {
             )
             lifecycleScope.launch(Dispatchers.IO) {
                 show(tool("python"))
+            }
+        }
+
+        binding.PackageListTool.setOnClickListener {
+            val packageListTool = PackageListTool()
+            lifecycleScope.launch(Dispatchers.IO) {
+                show(packageListTool())
             }
         }
     }
