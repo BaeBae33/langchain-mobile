@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.langchain.mobile.android.core.base.chain.conversation.ConversationChain
 import com.langchain.mobile.android.core.base.memory.ConversationBufferMemory
+import com.langchain.mobile.android.core.base.tool.Tool
 import com.langchain.mobile.android.core.utilities.GoogleSerperAPIWrapper
 import com.langchain.mobile.android.databinding.ActivityMainBinding
 import com.langchain.mobile.chatmodels.ChatOpenAI
@@ -47,8 +48,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.GoogleSerperAPIWrapper.setOnClickListener {
             val googleSerperAPIWrapper = GoogleSerperAPIWrapper("xxx")
+            val tool = Tool(
+                name = "I'm Feeling Lucky",
+                description = "Search Google and return the first result.",
+                func = googleSerperAPIWrapper::invoke
+            )
             lifecycleScope.launch(Dispatchers.IO) {
-                show(googleSerperAPIWrapper("What was Obama's first name?"))
+                show(tool("python"))
             }
         }
     }
