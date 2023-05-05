@@ -14,6 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "android"
 include ':app'
-include ':chat_models'
+include ':chat-models'
 include ':core'
 include ':native-feature'
