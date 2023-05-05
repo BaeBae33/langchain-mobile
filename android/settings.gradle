@@ -16,3 +16,4 @@ rootProject.name = "android"
 include ':app'
 include ':chat_models'
 include ':core'
+include ':native-feature'
