@@ -13,6 +13,10 @@ interface BaseChatModel : BaseLanguageModel {
         return null
     }
 
+    fun generate(message: BaseMessage): LLMResult {
+        return generate(listOf(listOf(message)))
+    }
+
     fun generate(messages: List<List<BaseMessage>>, stop: List<String> = listOf()): LLMResult {
         val results = messages.map { m -> generate(m, stop) }
         val llmOutput = combineLLMOutputs(results.map { res -> res.llmOutput })

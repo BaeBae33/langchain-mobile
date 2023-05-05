@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.langchain.mobile.android.core.base.chain.conversation.ConversationChain
 import com.langchain.mobile.android.core.base.memory.ConversationBufferMemory
+import com.langchain.mobile.android.core.base.message.HumanMessage
 import com.langchain.mobile.android.core.base.tool.Tool
 import com.langchain.mobile.android.core.utilities.GoogleSerperAPIWrapper
 import com.langchain.mobile.android.databinding.ActivityMainBinding
@@ -60,9 +61,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.PackageListTool.setOnClickListener {
+            val chat = ChatOpenAI(
+                "xxx"
+            ) {
+                temperature = 0.0
+                maxTokens = 1000
+            }
             val packageListTool = PackageListTool()
+            // save token
+            val packages = packageListTool().split(",").subList(0, 3).joinToString(",")
+
             lifecycleScope.launch(Dispatchers.IO) {
-                show(packageListTool())
+                val llmResult =
+                    chat.generate(HumanMessage("How many non-system apps in the list? App list: $packages"))
+                show(llmResult.generations.first().first().text)
             }
         }
     }
